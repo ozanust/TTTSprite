@@ -437,6 +437,7 @@
 				0A8B15F51B15EBBE00671609 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A8B15F61B15EBBE00671609 /* Build configuration list for PBXNativeTarget "TTTSpriteTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +446,7 @@
 				0A8B15F81B15EBBE00671609 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

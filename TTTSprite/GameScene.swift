@@ -38,6 +38,9 @@ class GameScene: SKScene {
     var aiTurn: Int!
     var aiSigned: Bool = false
     var firstMove: Bool = false
+    var preferWin: Bool = true
+    var toWin = 0
+    var toWinComb = []
     
     var turn = 1
     var signedBoxes = 0
@@ -211,7 +214,7 @@ class GameScene: SKScene {
                         println("workedprevent3")
                         break
                         
-                    }else if (tags[combination[1]] != tags[combination[2]] && tags[combination[1]] == nought && emptyBoxes[combination[0]].name != "Attached") {
+                    }else if (tags[combination[1]] != tags[combination[2]] && tags[combination[1]] == nought && emptyBoxes[combination[0]].name != "Attached" && turn <= 2) {
                         
                         tags[combination[0]] = cross
                         emptyBoxes[combination[0]].texture = SKTexture(imageNamed: "cross.png")
@@ -219,10 +222,10 @@ class GameScene: SKScene {
                         turn++
                         signedBoxes++
                         emptyBoxes[combination[0]].name = "Attached"
-                        println("workedprevent4")
+                        println("workednear")
                         break
                         
-                    }else if (tags[combination[0]] != tags[combination[1]] && tags[combination[1]] == nought && emptyBoxes[combination[2]].name != "Attached") {
+                    }else if (tags[combination[0]] != tags[combination[1]] && tags[combination[1]] == nought && emptyBoxes[combination[2]].name != "Attached" && turn <= 2) {
                         
                         tags[combination[2]] = cross
                         emptyBoxes[combination[2]].texture = SKTexture(imageNamed: "cross.png")
@@ -230,10 +233,10 @@ class GameScene: SKScene {
                         turn++
                         signedBoxes++
                         emptyBoxes[combination[2]].name = "Attached"
-                        println("workedprevent5")
+                        println("workednear2")
                         break
                         
-                    }else if (tags[combination[0]] != tags[combination[2]] && tags[combination[0]] == nought && emptyBoxes[combination[1]].name != "Attached") {
+                    }else if (tags[combination[0]] != tags[combination[2]] && tags[combination[0]] == nought && emptyBoxes[combination[1]].name != "Attached" && turn <= 2) {
                         
                         tags[combination[1]] = cross
                         emptyBoxes[combination[1]].texture = SKTexture(imageNamed: "cross.png")
@@ -241,22 +244,49 @@ class GameScene: SKScene {
                         turn++
                         signedBoxes++
                         emptyBoxes[combination[1]].name = "Attached"
-                        println("workedprevent6sad")
+                        println("workednear3")
                         break
                         
-                    }else{
-                        aiTurn = Int(arc4random_uniform(9))
-                        if(emptyBoxes[aiTurn].name != "Attached" && firstMove == false){
-                            emptyBoxes[aiTurn].texture = SKTexture(imageNamed: "cross.png")
-                            tags[aiTurn] = cross
-                            emptyBoxes[aiTurn].name = "Attached"
-                            aiSigned = true
-                            signedBoxes++
-                            turn++
-                            firstMove = true
-                            println("workedRand")
-                            break
+                    }else if (tags[combination[0]] == tags[combination[2]] && tags[combination[0]] == nought && emptyBoxes[combination[1]].name == "Attached") {
+                        toWin = combination[1]
+                        toWinComb = combination
+                        for combinationInside in winningCombinations{
+                            if (combinationInside != toWinComb && combinationInside[0] == toWin && emptyBoxes[combinationInside[1]].name != "Attached"){
+                                emptyBoxes[combinationInside[1]].texture = SKTexture(imageNamed: "cross.png")
+                                tags[combinationInside[1]] = cross
+                                emptyBoxes[combinationInside[1]].name = "Attached"
+                                aiSigned = true
+                                signedBoxes++
+                                turn++
+                                break
+                            }else if (combinationInside != toWinComb && combinationInside[1] == toWin && emptyBoxes[combinationInside[2]].name != "Attached"){
+                                emptyBoxes[combinationInside[2]].texture = SKTexture(imageNamed: "cross.png")
+                                tags[combinationInside[2]] = cross
+                                emptyBoxes[combinationInside[2]].name = "Attached"
+                                aiSigned = true
+                                signedBoxes++
+                                turn++
+                                break
+                            }else if (combinationInside != toWinComb && combinationInside[2] == toWin && emptyBoxes[combinationInside[1]].name != "Attached"){
+                                emptyBoxes[combinationInside[1]].texture = SKTexture(imageNamed: "cross.png")
+                                tags[combinationInside[1]] = cross
+                                emptyBoxes[combinationInside[1]].name = "Attached"
+                                aiSigned = true
+                                signedBoxes++
+                                turn++
+                                break
+                            }
                         }
+                        break
+                        /*aiTurn = Int(arc4random_uniform(9))
+                        emptyBoxes[aiTurn].texture = SKTexture(imageNamed: "cross.png")
+                        tags[aiTurn] = cross
+                        emptyBoxes[aiTurn].name = "Attached"
+                        aiSigned = true
+                        signedBoxes++
+                        turn++
+                        println("workedRand")
+                        break*/
                     }
                 }
                 
